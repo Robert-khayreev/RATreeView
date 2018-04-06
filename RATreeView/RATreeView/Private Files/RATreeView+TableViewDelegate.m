@@ -34,11 +34,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  CGFloat rowHeight = 44;
   if ([self.delegate respondsToSelector:@selector(treeView:heightForRowForItem:)]) {
     RATreeNode *treeNode = [self treeNodeForIndexPath:indexPath];
-    return [self.delegate treeView:self heightForRowForItem:treeNode.item];
+    
+    if (!treeNode.item) {
+        return rowHeight;
+    }
+    return MAX([self.delegate treeView:self heightForRowForItem:treeNode.item], rowHeight);
   }
-  return self.tableView.rowHeight;
+  return MAX(self.tableView.rowHeight, rowHeight);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
