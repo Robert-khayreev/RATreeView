@@ -562,7 +562,7 @@
     NSIndexPath *indexPath = [self indexPathForItem:item];
     [indexes addObject:indexPath];
   }
-
+  [indexes setArray: [[NSSet setWithArray: indexes] allObjects]];
   [self.tableView reloadRowsAtIndexPaths:indexes withRowAnimation:tableViewRowAnimation];
 }
 
